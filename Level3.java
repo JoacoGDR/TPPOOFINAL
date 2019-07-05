@@ -39,16 +39,6 @@ public class Level3 extends Level1{
     }
 
     @Override
-    public void clearContent(int i, int j) { //sera esto para que no se me borren las cosas con una explosion?,ya lo veremos
-        if(!(get(i,j).getKey().equals("FRUIT"))) {
-            System.out.println("elimino un " + get(i,j).getKey());
-            g()[i][j].clearContent();
-        }else
-            System.out.println("NO deberia eliminar nada!");
-
-    }
-
-    @Override
     public boolean tryMove(int i1, int j1, int i2, int j2) {
         boolean ret;
         int r,c;
@@ -61,15 +51,10 @@ public class Level3 extends Level1{
                 System.out.println(r);
                 System.out.println(c);
                 */
-                if(get(r,c).getKey().equals("-FRUIT")){
-                    System.out.println("ROMPO");
-                    System.out.println(r);
-                    System.out.println(c);
-                   setContent(r, c, new Nothing());
-                    clearContent(r,c);
-                    if(getCell(r,c).getContent() instanceof Nothing)
-                        getCell(r,c).fallUpperContent();
-                    gstate.addDestroyedFruit();
+                if(get(r,c) instanceof Fruit){
+                   clearContent(r,c);
+                   getCell(r,c).fallUpperContent();
+                   gstate.addDestroyedFruit();
 
                 }
             }
