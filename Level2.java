@@ -1,7 +1,6 @@
 package game.backend.level;
 import game.backend.GameState;
 import game.backend.element.CandyColor;
-import game.backend.element.Element;
 import game.backend.element.TimeBomb;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +8,6 @@ import java.util.List;
 
 public class Level2 extends Level1 {
     private BombList bombs = new BombList();
-
-    private static int getRand(int min, int max) {
-        return (int) (min + (Math.random() * (max - min)));
-    }
 
     @Override
     public void initialize() {
@@ -34,7 +29,8 @@ public class Level2 extends Level1 {
     public boolean tryMove(int i1, int j1, int i2, int j2) {
         boolean ret;
         if (ret = super.tryMove(i1, j1, i2, j2)) {
-            bombs.decrementCounter();
+            if(!bombs.isEmpty())
+                bombs.decrementCounter();
         }
         return ret;
     }
@@ -82,9 +78,13 @@ public class Level2 extends Level1 {
             updateMinCounter();
         }
         public void updateMinCounter(){
-            minCounter = list.stream()
-                    .map(TimeBomb::getCounter)
-                    .min(Integer::compare).get();
+            if(bombs.isEmpty())
+                minCounter = 0;
+            else {
+                minCounter = list.stream()
+                        .map(TimeBomb::getCounter)
+                        .min(Integer::compare).get();
+            }
         }
         public void decrementCounter(){
             for(TimeBomb bomb : list) {
@@ -96,6 +96,10 @@ public class Level2 extends Level1 {
             return list.size() == 0;
         }
     }
+
+
+}
+
 
 
 }
