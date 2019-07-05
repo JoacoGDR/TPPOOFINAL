@@ -5,7 +5,7 @@ import game.backend.element.Element;
 import game.backend.element.TimeBomb;
 import java.util.ArrayList;
 import java.util.List;
-
+hola puto
 
 public class Level2 extends Level1 {
     private BombList bombs = new BombList();
