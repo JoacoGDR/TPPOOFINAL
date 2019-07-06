@@ -20,7 +20,7 @@ public class ImageManager {
 		images.put(new Bomb().getKey(),  new Image(IMAGE_PATH + "bomb.png"));
 		images.put(new Wall().getKey(),  new Image(IMAGE_PATH + "wall.png"));
 		for (CandyColor cc: CandyColor.values()) {
-			images.put(new Candy(cc).getFullKey(), new Image(IMAGE_PATH + cc.toString().toLowerCase() + "Candy.png"));
+			images.put(new Candy(cc).getFullKey(),   new Image(IMAGE_PATH + cc.toString().toLowerCase() + "Candy.png"));
 		}
 		for (CandyColor cc: CandyColor.values()) {
 			wc.setColor(cc);
@@ -34,9 +34,9 @@ public class ImageManager {
 			hc.setColor(cc);
 			images.put(hc.getFullKey(),  new Image(IMAGE_PATH + cc.toString().toLowerCase() + "HStripped.png"));
 		}
-		for(Fruits ft : Fruits.values() ){
-			images.put(new Fruit(ft).getFullKey(), new Image(IMAGE_PATH + ft.toString().toLowerCase() + ".png"));
-		}
+		images.put(new Fruit(FruitType.CHERRY).getFullKey(), new Image(IMAGE_PATH + "cherry.png"));
+		images.put(new Fruit(FruitType.HAZELNUT).getFullKey(), new Image(IMAGE_PATH + "hazelnut.png"));
+
 	}
 
 	public Image getImage(Element e) {
