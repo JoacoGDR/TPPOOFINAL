@@ -8,16 +8,24 @@ import java.util.List;
 
 public class Level2 extends Level1 {
     private BombList bombs = new BombList();
-
+    private int bombsRemaining(){
+        return bombs.size();
+    }
     @Override
     public void initialize() {
         super.initialize(); //Hace lo mismo que antes solo que ahora reemplaza algunos elemenos por bombas de Tiempo
         for (int j = 0; j <= getRand(1, 4); j++) {
             bombs.add(new TimeBomb(CandyColor.values()[getRand(0, CandyColor.values().length)], getRand(5, 10)));
+            System.out.println(bombsRemaining());
         }
         for (TimeBomb b : bombs.list) {
-            setContent(getRand(0, SIZE - 1), getRand(0, SIZE - 1), b);
+            int i = getRand(0,SIZE-1);
+            int j = getRand(0,SIZE-1);
+            setContent(i, j,b);
+            tryRemove(g()[i][j]);
+
         }
+        fallElements();
     }
 
     @Override
@@ -70,12 +78,14 @@ public class Level2 extends Level1 {
                 minCounter = bomb.getCounter();
             }
             list.add(bomb);
-            if(minCounter > bomb.getCounter())
+            if(minCounter >= bomb.getCounter())
                 minCounter = bomb.getCounter();
         }
         public void remove(TimeBomb bomb){
             list.remove(bomb);
             updateMinCounter();
+            System.out.println("Removed" + " there are " + size() +" bombs left");
+            System.out.println("The minCounter is " + minCounter);
         }
         public void updateMinCounter(){
             if(bombs.isEmpty())
@@ -95,13 +105,11 @@ public class Level2 extends Level1 {
         public boolean isEmpty(){
             return list.size() == 0;
         }
+        public int size(){return list.size();}
     }
 
 
 }
 
-
-
-}
 
 
