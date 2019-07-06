@@ -1,8 +1,9 @@
 package game.backend.level;
 
 import game.backend.GameState;
+import game.backend.cell.Cell;
 import game.backend.element.Fruit;
-import game.backend.element.Fruits;
+import game.backend.element.FruitType;
 import game.backend.element.Nothing;
 
 import java.util.ArrayList;
@@ -16,16 +17,13 @@ public class Level3 extends Level1{
     private Level3State gstate;
     private int MAX_MOVES = 20;
 
-    private static int getRand(int min, int max) {
-        return (int) (min + (Math.random() * (max - min)));
-    }
 
     @Override
     public void initialize(){ //inicia el grid con las frutas.
         super.initialize();
-        int fruitQty = getRand(1,6);
+        int fruitQty = getRand(1,4);
         for (int j = 0; j <= fruitQty; j++) {
-            fruits.add(new Fruit(Fruits.values()[getRand(0, Fruits.values().length) ]));
+            fruits.add(new Fruit(FruitType.values()[getRand(0, FruitType.values().length) ]));
         }
         for (Fruit f : fruits) {
             setContent(getRand(0, SIZE/2), getRand(0, SIZE-1), f);
@@ -39,15 +37,9 @@ public class Level3 extends Level1{
         return gstate;
     }
 
-    /*@Override
-    public void clearContent(int i, int j) { //sera esto para que no se me borren las cosas con una explosion?,ya lo veremos
-        if(!(get(i,j).getKey().equals("-FRUIT"))) {
-            System.out.println("elimino un " + get(i,j).getKey());
-            g()[i][j].clearContent();
-        }else
-            System.out.println("NO deberia eliminar nada!");
-
-    }*/
+    public void clearFruit(Cell cell){
+        cell.setContent(new Nothing());
+    }
 
     @Override
     public boolean tryMove(int i1, int j1, int i2, int j2) {
@@ -58,23 +50,8 @@ public class Level3 extends Level1{
             //cada vez que hago un movimiento, voy a chequear mi grid y ver si hay frutas abajo
 
             for (r = SIZE - 1, c = 0; c < SIZE; c++) {
-                /*
-                System.out.println(r);
-                System.out.println(c);
-                */
-                /*if(get(r,c).getKey().equals("-FRUIT")){
-                    System.out.println("ROMPO");
-                    System.out.println(r);
-                    System.out.println(c);
-                   // setContent(r, c, new Nothing());
-                    clearContent(r,c);
-                  //  if(getCell(r,c).getContent() instanceof Nothing)
-                        fallElements();
-                    gstate.addDestroyedFruit();
-
-                }*/
                 if (get(r, c) instanceof Fruit) {
-                    clearContent(r, c);
+                    clearFruit(g()[r][c]);
                     fallElements();
                     gstate.addDestroyedFruit();
                     System.out.println("Rompiste" + gstate.fruitsDestroyed + "frutas");
@@ -96,7 +73,7 @@ public class Level3 extends Level1{
         private int maxMoves;
 
         Level3State(int maxMoves){
-                        this.maxMoves = maxMoves;
+            this.maxMoves = maxMoves;
         }
 
         public void addDestroyedFruit(){
