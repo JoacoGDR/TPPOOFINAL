@@ -15,7 +15,7 @@ public class MoveMaker {
 		this.grid = grid;
 		initMap();
 	}
-
+//LOS FruitMove(), se pueden reemplazar por CandyMove, porque hasta ahora no les cambie nada asique...
 	private void initMap(){
 		map = new HashMap<>();
 		map.put(new Candy().getKey() + new Candy().getKey(), new CandyMove(grid));
