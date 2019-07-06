@@ -1,6 +1,8 @@
 
 package game.backend.level;
+import game.backend.Figure;
 import game.backend.GameState;
+import game.backend.cell.Cell;
 import game.backend.element.CandyColor;
 import game.backend.element.TimeBomb;
 import java.util.ArrayList;
@@ -31,17 +33,18 @@ public class Level2 extends Level1 {
 
         }
         System.out.println("Antes de borrar hay " + bombsRemaining());
-        System.out.println("En el grid: "+bombsRemaining());
         for(int i = 0; i< SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 tryRemove(g()[i][j]);
-                gstate.updateMinCounter();
+                System.out.println(bombsRemaining());
             }
         }
         fallElements();
         gstate.updateMinCounter();
         System.out.println("Luego de borrar hay " + bombsRemaining());
     }
+
+
     public int bombsRemaining() {
         return bombs.size();
     }
@@ -51,6 +54,7 @@ public class Level2 extends Level1 {
         gstate = new Level2State(MAX_COUNT); //le mando el MAXCOUNT, porque despues lo voy a bajar. SI le mando el MINCOUNT, entonces puede que nunca lo baje y va a estar mal
         return gstate;
     }
+
     @Override
     public boolean tryMove(int i1, int j1, int i2, int j2) {
         boolean ret;
@@ -78,7 +82,7 @@ public class Level2 extends Level1 {
             for (TimeBomb b : bombs) {
                 b.decrementCounter();
             }
-            minCounter--;
+            updateMinCounter();
         }
 
         public void updateMinCounter() {
@@ -89,6 +93,12 @@ public class Level2 extends Level1 {
 
             }
         }
+
+        @Override
+        public long getScore() {
+            return minCounter;
+        }
+
         @Override
         public boolean gameOver() {
             return playerWon() || minCounter == 0;
@@ -97,6 +107,11 @@ public class Level2 extends Level1 {
         @Override
         public boolean playerWon() {
             return bombs.isEmpty();
+        }
+
+        @Override
+        public String toString() {
+            return String.format("Bombs remaining: %d, Counter: %d",bombsRemaining(),minCounter);
         }
     }
 }

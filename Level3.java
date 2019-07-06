@@ -15,7 +15,7 @@ public class Level3 extends Level1{
 
     private List<Fruit> fruits = new ArrayList<>();
     private Level3State gstate;
-    private int MAX_MOVES = 20;
+    private int MAX_MOVES = 5;
 
 
     @Override
@@ -26,7 +26,14 @@ public class Level3 extends Level1{
             fruits.add(new Fruit(FruitType.values()[getRand(0, FruitType.values().length) ]));
         }
         for (Fruit f : fruits) {
-            setContent(getRand(0, SIZE/2), getRand(0, SIZE-1), f);
+
+            int i = getRand(0, SIZE/2);
+            int j = getRand(0, SIZE - 1);
+            while((get(i,j) instanceof Fruit)) {
+                i = getRand(0, SIZE/2);
+                j = getRand(0, SIZE - 1);
+            }
+            setContent(i, j, f);
         }
         gstate.setReqFruits(fruits.size());
     }
@@ -41,26 +48,44 @@ public class Level3 extends Level1{
         cell.setContent(new Nothing());
     }
 
+    //Chequeo si en la linea de abajo hay frutas
+    //las Elimino y retorno true si elimine
+    //false si no elimine nada
+
+    private boolean clearedFruits() {
+        int r, c;
+        boolean ret = false;
+        for (r = SIZE - 1, c = 0; c < SIZE; c++) {
+            if (get(r, c) instanceof Fruit) {
+                clearFruit(g()[r][c]);
+                fallElements();
+                gstate.addDestroyedFruit();
+                System.out.println("Rompiste" + gstate.fruitsDestroyed + "frutas");
+                System.out.println("Son: " + gstate.reqFruits);
+                ret = true;
+            }
+
+        }
+        return ret;
+    }
+
     @Override
     public boolean tryMove(int i1, int j1, int i2, int j2) {
         boolean ret;
         int r, c;
+
         if (ret = super.tryMove(i1, j1, i2, j2)) {
-            gstate.addMove();
+
             //cada vez que hago un movimiento, voy a chequear mi grid y ver si hay frutas abajo
 
-            for (r = SIZE - 1, c = 0; c < SIZE; c++) {
-                if (get(r, c) instanceof Fruit) {
-                    clearFruit(g()[r][c]);
-                    fallElements();
-                    gstate.addDestroyedFruit();
-                    System.out.println("Rompiste" + gstate.fruitsDestroyed + "frutas");
-                    System.out.println("Son: " + gstate.reqFruits);
-                }
-
-            }
+            //salgo del while cuando clearedFruits() me da false, osea no se limpio ninguna fruta
+            //osea no habia frutas por limpiar
+            while(clearedFruits());
 
         }
+
+
+        System.out.println("MOVIMIENTOS: " + gstate.getMoves());
         return ret;
     }
 
@@ -78,7 +103,11 @@ public class Level3 extends Level1{
 
         public void addDestroyedFruit(){
             fruitsDestroyed++;
+        }
 
+        @Override
+        public long getScore() {
+            return fruitsDestroyed;
         }
 
         public void setReqFruits(int reqFruits) {
@@ -93,6 +122,11 @@ public class Level3 extends Level1{
         @Override
         public boolean playerWon() {//se llama siempre
             return fruitsDestroyed == reqFruits;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("Moves: %d, Fruits: %d/%d",getMoves(),reqFruits,reqFruits-fruitsDestroyed);
         }
     }
 
