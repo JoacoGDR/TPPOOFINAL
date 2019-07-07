@@ -19,10 +19,10 @@ public abstract class Grid {
 
 	private Cell[][] g = new Cell[SIZE][SIZE];
 	private Map<Cell, Point> gMap = new HashMap<>();
-	protected GameState state;
+	private GameState state;
 	private List<GameListener> listeners = new ArrayList<>();
 	private MoveMaker moveMaker;
-	protected FigureDetector figureDetector;
+	private FigureDetector figureDetector;
 	
 	protected abstract GameState newState();
 	protected abstract void fillCells();
@@ -63,7 +63,7 @@ public abstract class Grid {
 			while (j < SIZE) {
 				if (g[i][j].isEmpty()) {
 					if (g[i][j].fallUpperContent()) {
-						i = SIZE; // why?
+						i = SIZE;
 						j = -1;
 						break;
 					} 
@@ -149,8 +149,4 @@ public abstract class Grid {
 		}
 	}
 
-	@Override
-	public String toString() {
-		return state().toString();
-	}
 }

@@ -69,7 +69,7 @@ public enum Figure {
 	public boolean hasReplacement() {
 		return replacementClass != null;
 	}
-
+	
 	public boolean matches(int acum) {
 		return value == (value & acum);
 	}

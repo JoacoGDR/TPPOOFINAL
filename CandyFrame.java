@@ -5,19 +5,13 @@ import game.backend.GameListener;
 import game.backend.cell.Cell;
 import game.backend.element.Element;
 
-import game.backend.level.Level2;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-
-import java.util.Optional;
 
 public class CandyFrame extends VBox {
 
@@ -28,10 +22,8 @@ public class CandyFrame extends VBox {
 	private ImageManager images;
 	private Point2D lastPoint;
 	private CandyGame game;
-	private String finishMessage;
 
 	public CandyFrame(CandyGame game) {
-
 		this.game = game;
 		getChildren().add(new AppMenu());
 		images = new ImageManager();
@@ -54,8 +46,8 @@ public class CandyFrame extends VBox {
 						Cell cell = CandyFrame.this.game.get(i, j);
 						Element element = cell.getContent();
 						Image image = images.getImage(element);
-						timeLine.getKeyFrames().add(new KeyFrame(frameTime, e -> boardPanel.setImage(finalI, finalJ, null, game.getGrid() )));
-						timeLine.getKeyFrames().add(new KeyFrame(frameTime, e -> boardPanel.setImage(finalI, finalJ, image,game.getGrid())));
+						timeLine.getKeyFrames().add(new KeyFrame(frameTime, e -> boardPanel.setImage(finalI, finalJ, null)));
+						timeLine.getKeyFrames().add(new KeyFrame(frameTime, e -> boardPanel.setImage(finalI, finalJ, image)));
 					}
 					frameTime = frameTime.add(frameGap);
 				}
@@ -78,30 +70,13 @@ public class CandyFrame extends VBox {
 				if (newPoint != null) {
 					System.out.println("Get second = " +  newPoint);
 					game().tryMove((int)lastPoint.getX(), (int)lastPoint.getY(), (int)newPoint.getX(), (int)newPoint.getY());
-					String message = game.getGrid().toString();
-					
-					/*
-					* Modificacion para que no se pueda seguir jugando una vez terminado el juego
-					* y para que salga un mensaje con el resultado final del mismo.
-					*/
+					String message = ((Long)game().getScore()).toString();
 					if (game().isFinished()) {
 						if (game().playerWon()) {
-							finishMessage = "CONGRATULATIONS!!!";
+							message = message + " Finished - Player Won!";
 						} else {
-							finishMessage = "YOU LOST!";
+							message = message + " Finished - Loser !";
 						}
-						scorePanel.updateScore(message);
-						Alert alert = new Alert(Alert.AlertType.INFORMATION);
-						alert.setTitle("Result");
-						alert.setHeaderText(finishMessage);
-
-						Optional<ButtonType> result = alert.showAndWait();
-						if(result.isPresent()) {
-							if (result.get() == ButtonType.CLOSE) {
-								Platform.exit();
-							}
-						}
-						return;
 					}
 					scorePanel.updateScore(message);
 					lastPoint = null;

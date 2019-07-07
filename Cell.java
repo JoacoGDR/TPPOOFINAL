@@ -2,11 +2,7 @@ package game.backend.cell;
 
 import game.backend.Grid;
 import game.backend.element.Element;
-import game.backend.element.Fruit;
 import game.backend.element.Nothing;
-import game.backend.element.TimeBomb;
-import game.backend.level.Level2;
-import game.backend.level.Level3;
 import game.backend.move.Direction;
 
 public class Cell {
@@ -44,21 +40,14 @@ public class Cell {
 	}
 	
 	public void clearContent() {
-		if(!(content instanceof Fruit)) {
-			if (content.isMovable()) {
-				if(content instanceof TimeBomb){
-					Level2 mygrid = (Level2) grid;
-					mygrid.getBombs().remove(content);
-					System.out.println(mygrid.bombsRemaining());
-				}
-				Direction[] explosionCascade = content.explode();
-				grid.cellExplosion(content);
-				this.content = new Nothing();
-				if (explosionCascade != null) {
-					expandExplosion(explosionCascade);
-				}
-				this.content = new Nothing();
+		if (content.isMovable()) {
+			Direction[] explosionCascade = content.explode();
+			grid.cellExplosion(content);
+			this.content = new Nothing();
+			if (explosionCascade != null) {
+				expandExplosion(explosionCascade); 
 			}
+			this.content = new Nothing();
 		}
 	}
 	

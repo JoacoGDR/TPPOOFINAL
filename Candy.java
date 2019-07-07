@@ -2,7 +2,7 @@ package game.backend.element;
 
 public class Candy extends Element {
 	
-	protected CandyColor color;
+	private CandyColor color;
 	
 	public Candy() {
 	}

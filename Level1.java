@@ -9,14 +9,11 @@ import game.backend.element.Wall;
 public class Level1 extends Grid {
 	
 	private static int REQUIRED_SCORE = 5000; 
-	private static int MAX_MOVES = 20;
+	private static int MAX_MOVES = 20; 
 	
 	private Cell wallCell;
 	private Cell candyGenCell;
-	protected int getRand(int min, int max) {
-		return (int) (min + (Math.random() * (max - min)));
-	}
-
+	
 	@Override
 	protected GameState newState() {
 		return new Level1State(REQUIRED_SCORE, MAX_MOVES);

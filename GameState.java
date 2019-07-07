@@ -25,8 +25,4 @@ public abstract class GameState {
 	
 	public abstract boolean playerWon();
 
-	@Override
-	public String toString() {
-		return String.format("%d", getScore());
-	}
 }
