@@ -15,7 +15,7 @@ public class Level3 extends Level1{
 
     private List<Fruit> fruits = new ArrayList<>();
     private Level3State gstate;
-    private int MAX_MOVES = 5;
+    private int MAX_MOVES = 20;
 
 
     @Override
@@ -126,7 +126,7 @@ public class Level3 extends Level1{
 
         @Override
         public String toString() {
-            return String.format("Moves: %d, Fruits: %d/%d",getMoves(),reqFruits,reqFruits-fruitsDestroyed);
+            return String.format("Moves: %d/%d, Fruits: %d/%d",getMoves(),MAX_MOVES,reqFruits-fruitsDestroyed,reqFruits);
         }
     }
 

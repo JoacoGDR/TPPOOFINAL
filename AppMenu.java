@@ -1,7 +1,13 @@
 package game.frontend;
 
+import game.backend.CandyGame;
+import game.backend.level.Level1;
+import game.backend.level.Level3;
+import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.util.Optional;
 
@@ -33,8 +39,11 @@ public class AppMenu extends MenuBar {
                     "Implementación Original: Laura Zabaleta (POO 2013).");
             alert.showAndWait();
         });
+
         help.getItems().add(aboutMenuItem);
         getMenus().addAll(file, help);
+
     }
+
 
 }

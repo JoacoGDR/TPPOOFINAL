@@ -47,7 +47,14 @@ public class GameApp extends Application {
 			primaryStage.setScene(scene);
 		});
 
-		VBox menu = new VBox(50);
+		VBox menu = new VBox(45);
+		level1.setPrefSize(100,25);
+		level2.setPrefSize(100,25);
+		level3.setPrefSize(100,25);
+		level1.setTranslateY(225);
+		level2.setTranslateY(225);
+		level3.setTranslateY(225);
+
 		menu.setAlignment(Pos.CENTER);
 		menu.getChildren().addAll(level1,level2,level3);
 		Image image = new Image("images/titleScreen.png");

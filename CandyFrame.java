@@ -8,11 +8,16 @@ import game.backend.element.Element;
 import game.backend.level.Level2;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+
+import java.util.Optional;
 
 public class CandyFrame extends VBox {
 
@@ -23,8 +28,10 @@ public class CandyFrame extends VBox {
 	private ImageManager images;
 	private Point2D lastPoint;
 	private CandyGame game;
+	private String finishMessage;
 
 	public CandyFrame(CandyGame game) {
+
 		this.game = game;
 		getChildren().add(new AppMenu());
 		images = new ImageManager();
@@ -74,10 +81,22 @@ public class CandyFrame extends VBox {
 					String message = game.getGrid().toString();
 					if (game().isFinished()) {
 						if (game().playerWon()) {
-							message = message + " Finished - Player Won!";
+							finishMessage = "CONGRATULATIONS!!!";
 						} else {
-							message = message + " Finished - Loser !";
+							finishMessage = "YOU LOST!";
 						}
+						scorePanel.updateScore(message);
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+						alert.setTitle("Result");
+						alert.setHeaderText(finishMessage);
+
+						Optional<ButtonType> result = alert.showAndWait();
+						if(result.isPresent()) {
+							if (result.get() == ButtonType.CLOSE) {
+								Platform.exit();
+							}
+						}
+						return;
 					}
 					scorePanel.updateScore(message);
 					lastPoint = null;

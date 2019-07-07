@@ -11,7 +11,9 @@ public class TimeBomb extends Candy {
     public int getCounter() {
         return counter;
     }
+
     public void decrementCounter(){
         counter--;
     }
+
 }
