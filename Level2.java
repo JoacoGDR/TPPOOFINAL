@@ -14,14 +14,16 @@ public class Level2 extends Level1 {
     private int MIN_COUNT = 5, MAX_COUNT = 10;
     private Level2State gstate;
 
+    //Se inicializa de la misma forma que Level1 y luego se agregan las bombas
     @Override
     public void initialize() {
-        super.initialize(); //Hace lo mismo que antes solo que ahora reemplaza algunos elemenos por bombas de Tiempo
+        super.initialize(); 
         int amount = getRand(1, 4);
         for (int j = 0; j <= amount; j++) {
             bombs.add(new TimeBomb(CandyColor.values()[getRand(0, CandyColor.values().length)], getRand(MIN_COUNT, MAX_COUNT)));
         }
-
+        //Se distribuyen las bombas
+        //De esta forma, 2 o mas bombas no pueden ser situadas en un mismo lugar
         for (TimeBomb b : bombs) {
             int i = getRand(0, SIZE - 1);
             int j = getRand(0, SIZE - 1);
@@ -32,16 +34,15 @@ public class Level2 extends Level1 {
             setContent(i, j, b);
 
         }
-        System.out.println("Antes de borrar hay " + bombsRemaining());
+        //Luego de agregar las bombas, vemos si se formo alguna figura
+        //para asi eliminarla y que el juego empiece correctamente
         for(int i = 0; i< SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 tryRemove(g()[i][j]);
-                System.out.println(bombsRemaining());
             }
         }
         fallElements();
         gstate.updateMinCounter();
-        System.out.println("Luego de borrar hay " + bombsRemaining());
     }
 
 
@@ -51,7 +52,7 @@ public class Level2 extends Level1 {
 
     @Override
     protected GameState newState() {
-        gstate = new Level2State(MAX_COUNT); //le mando el MAXCOUNT, porque despues lo voy a bajar. SI le mando el MINCOUNT, entonces puede que nunca lo baje y va a estar mal
+        gstate = new Level2State(MAX_COUNT);
         return gstate;
     }
 
@@ -69,6 +70,7 @@ public class Level2 extends Level1 {
         return bombs;
     }
 
+    
     private class Level2State extends GameState {
         private int minCounter;
 
@@ -108,10 +110,11 @@ public class Level2 extends Level1 {
         public boolean playerWon() {
             return bombs.isEmpty();
         }
-
+        
+        
         @Override
         public String toString() {
-            return String.format("Bombs remaining: %d, Counter: %d",bombsRemaining(),minCounter);
+            return String.format("Bombs remaining: %d, Counter: %d", bombsRemaining(), minCounter);
         }
     }
 }
