@@ -6,6 +6,7 @@ import game.backend.element.*;
 import java.util.HashMap;
 import java.util.Map;
 
+//Agregamos el movimiento para las Frutas
 public class MoveMaker {
 
 	private Map<String, Move> map;
