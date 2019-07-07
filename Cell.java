@@ -43,13 +43,16 @@ public class Cell {
 		return content;
 	}
 	
+	/* Modificaciones: (1) Para que no se destruyan las frutas de la misma manera que los demas caramelos
+	*	(2) Si se destruye una bomba se descuenta del contador de bombas.
+	*/
+	
 	public void clearContent() {
 		if(!(content instanceof Fruit)) {
 			if (content.isMovable()) {
 				if(content instanceof TimeBomb){
 					Level2 mygrid = (Level2) grid;
 					mygrid.getBombs().remove(content);
-					System.out.println(mygrid.bombsRemaining());
 				}
 				Direction[] explosionCascade = content.explode();
 				grid.cellExplosion(content);
