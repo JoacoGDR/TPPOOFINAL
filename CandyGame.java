@@ -62,6 +62,7 @@ public class CandyGame implements GameListener {
 		//
 	}
 
+	//agregamos un getter para grid
 	public Grid getGrid() {
 		return grid;
 	}
