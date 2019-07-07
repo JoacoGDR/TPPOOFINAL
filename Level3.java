@@ -29,7 +29,8 @@ public class Level3 extends Level1{
         //Se agregan de forma aleatoria las frutas, y se verifica que no haya mas de una en un mismo lugar
         for (Fruit f : fruits) {
 
-            int i = getRand(0, SIZE/2);
+            //SIZE/2 para que aparezcan en la parte superior de la grilla, y asi evitar que puedan empezar en la ultima fila
+            int i = getRand(0, SIZE/2); 
             int j = getRand(0, SIZE - 1);
             while((get(i,j) instanceof Fruit)) {
                 i = getRand(0, SIZE/2);
