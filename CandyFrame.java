@@ -79,6 +79,11 @@ public class CandyFrame extends VBox {
 					System.out.println("Get second = " +  newPoint);
 					game().tryMove((int)lastPoint.getX(), (int)lastPoint.getY(), (int)newPoint.getX(), (int)newPoint.getY());
 					String message = game.getGrid().toString();
+					
+					/*
+					* Modificacion para que no se pueda seguir jugando una vez terminado el juego
+					* y para que salga un mensaje con el resultado final del mismo.
+					*/
 					if (game().isFinished()) {
 						if (game().playerWon()) {
 							finishMessage = "CONGRATULATIONS!!!";
