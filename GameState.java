@@ -25,6 +25,9 @@ public abstract class GameState {
 	
 	public abstract boolean playerWon();
 
+	//El "valor default" es el score
+	//Se hizo este metodo para simplificar la forma de obtener y mostrar en pantalla lo pedido en cada nivel
+	//(puntaje, cantidad de movimientos, frutas, etc)
 	@Override
 	public String toString() {
 		return String.format("%d", getScore());
