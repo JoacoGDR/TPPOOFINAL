@@ -154,4 +154,9 @@ public abstract class Grid {
 	public String toString() {
 		return state().toString();
 	}
+	
+	//Devuelve un numero random entre min y max.
+	protected int getRand(int min, int max) {
+		return (int) (min + (Math.random() * (max - min)));
+	}
 }
