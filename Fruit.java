@@ -17,4 +17,9 @@ public class Fruit extends Element {
     public String getKey() {
         return "FRUIT";
     }
+
+    @Override
+    public String getFullKey() {
+        return getKey() + type;
+    }
 }
