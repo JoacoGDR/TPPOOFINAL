@@ -34,8 +34,10 @@ public class ImageManager {
 			hc.setColor(cc);
 			images.put(hc.getFullKey(),  new Image(IMAGE_PATH + cc.toString().toLowerCase() + "HStripped.png"));
 		}
-		images.put(new Fruit(FruitType.CHERRY).getFullKey(), new Image(IMAGE_PATH + "cherry.png"));
-		images.put(new Fruit(FruitType.HAZELNUT).getFullKey(), new Image(IMAGE_PATH + "hazelnut.png"));
+		//agregamos las imagenes de las frutas
+		for(FruitType ft : FruitType.values()) {
+       		     images.put(new Fruit(ft).getFullKey(), new Image(IMAGE_PATH + ft.toString().toLowerCase() +".png"));
+       		 }
 
 	}
 
