@@ -17,14 +17,16 @@ public class Level3 extends Level1{
     private Level3State gstate;
     private int MAX_MOVES = 20;
 
-
+    //Inicia el grid como en Level 1, y luego se agregan de forma aleatoria las frutas
     @Override
-    public void initialize(){ //inicia el grid con las frutas.
+    public void initialize(){ 
         super.initialize();
         int fruitQty = getRand(1,4);
         for (int j = 0; j <= fruitQty; j++) {
             fruits.add(new Fruit(FruitType.values()[getRand(0, FruitType.values().length) ]));
         }
+        
+        //Se agregan de forma aleatoria las frutas, y se verifica que no haya mas de una en un mismo lugar
         for (Fruit f : fruits) {
 
             int i = getRand(0, SIZE/2);
@@ -51,7 +53,6 @@ public class Level3 extends Level1{
     //Chequeo si en la linea de abajo hay frutas
     //las Elimino y retorno true si elimine
     //false si no elimine nada
-
     private boolean clearedFruits() {
         int r, c;
         boolean ret = false;
@@ -60,8 +61,6 @@ public class Level3 extends Level1{
                 clearFruit(g()[r][c]);
                 fallElements();
                 gstate.addDestroyedFruit();
-                System.out.println("Rompiste" + gstate.fruitsDestroyed + "frutas");
-                System.out.println("Son: " + gstate.reqFruits);
                 ret = true;
             }
 
@@ -75,23 +74,18 @@ public class Level3 extends Level1{
         int r, c;
 
         if (ret = super.tryMove(i1, j1, i2, j2)) {
-
-            //cada vez que hago un movimiento, voy a chequear mi grid y ver si hay frutas abajo
-
-            //salgo del while cuando clearedFruits() me da false, osea no se limpio ninguna fruta
-            //osea no habia frutas por limpiar
+            //cada vez que hago un movimiento, voy a ver si hay frutas abajo
+            //salgo del while cuando clearedFruits() es false, es decir, no se limpio ninguna fruta
+            //es decir no habia frutas por limpiar
             while(clearedFruits());
 
         }
-
-
-        System.out.println("MOVIMIENTOS: " + gstate.getMoves());
         return ret;
     }
 
 
-    //---------------------------------------------------
-    private class Level3State extends  GameState{
+    
+    private class Level3State extends GameState{
 
         private int reqFruits;
         private int fruitsDestroyed = 0;
@@ -120,15 +114,15 @@ public class Level3 extends Level1{
         }
 
         @Override
-        public boolean playerWon() {//se llama siempre
+        public boolean playerWon() {
             return fruitsDestroyed == reqFruits;
         }
 
         @Override
         public String toString() {
-            return String.format("Moves: %d/%d, Fruits: %d/%d",getMoves(),MAX_MOVES,reqFruits-fruitsDestroyed,reqFruits);
+            return String.format("Moves: %d/%d, Fruits: %d/%d", getMoves(), MAX_MOVES, reqFruits-fruitsDestroyed, reqFruits);
         }
     }
 
-    //-----------------------------------------------------
+   
 }
