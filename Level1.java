@@ -13,9 +13,7 @@ public class Level1 extends Grid {
 	
 	private Cell wallCell;
 	private Cell candyGenCell;
-	protected int getRand(int min, int max) {
-		return (int) (min + (Math.random() * (max - min)));
-	}
+	
 
 	@Override
 	protected GameState newState() {
