@@ -21,6 +21,7 @@ public class GameApp extends Application {
 		launch(args);
 	}
 
+	//Cada boton posee las instrucciones para ejecutar el nivel deseado.
 	@Override
 	public void start(Stage primaryStage) {
 		Button level1 = new Button("Level 1");
@@ -47,6 +48,8 @@ public class GameApp extends Application {
 			primaryStage.setScene(scene);
 		});
 
+		
+		//Menu para elegir el nivel
 		VBox menu = new VBox(45);
 		level1.setPrefSize(100,25);
 		level2.setPrefSize(100,25);
@@ -57,6 +60,8 @@ public class GameApp extends Application {
 
 		menu.setAlignment(Pos.CENTER);
 		menu.getChildren().addAll(level1,level2,level3);
+		
+		//imagen de fondo del menu
 		Image image = new Image("images/titleScreen.png");
 		Scene menuScene = new Scene(menu,image.getWidth(),image.getHeight());
 		BackgroundImage backgroundImage = new BackgroundImage(image,BackgroundRepeat.NO_REPEAT,
@@ -65,6 +70,7 @@ public class GameApp extends Application {
 				BackgroundSize.DEFAULT);
 		Background background = new Background(backgroundImage);
 		menu.setBackground(background);
+		
 		primaryStage.setResizable(false);
 		primaryStage.setScene(menuScene);
 		primaryStage.show();
