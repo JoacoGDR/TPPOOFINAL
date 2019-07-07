@@ -63,7 +63,7 @@ public abstract class Grid {
 			while (j < SIZE) {
 				if (g[i][j].isEmpty()) {
 					if (g[i][j].fallUpperContent()) {
-						i = SIZE; // why?
+						i = SIZE;
 						j = -1;
 						break;
 					} 
@@ -149,6 +149,7 @@ public abstract class Grid {
 		}
 	}
 
+	
 	@Override
 	public String toString() {
 		return state().toString();
